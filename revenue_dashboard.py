@@ -11,13 +11,19 @@ st.title("TOL Revenue Projections")
 # Input components
 st.header("Subs & Engagement")
 
-# Subscribers and Engagement
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=12000, step=500)
-engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.66)
+# Checkbox for Subscription Revenue
+include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
-# Ad Revenue Split for Display Ads
+# Subscribers and Engagement
+subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=20000, step=500)
+engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
+avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.0)
+
+# Checkbox for Display Revenue
 st.header("Display Revenue Split")
+include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
+
+# Display Revenue Split Inputs
 direct_sold_percentage = st.slider("Percentage of Direct Sold Display Ads", min_value=0, max_value=100, value=20, step=1)
 open_market_percentage = 100 - direct_sold_percentage
 
@@ -25,8 +31,11 @@ open_market_percentage = 100 - direct_sold_percentage
 effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Display Ads (€)", min_value=0.5, max_value=20.0, value=4.0)
 effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Display Ads (€)", min_value=0.5, max_value=10.0, value=1.0)
 
-# Video Ad Revenue Split
+# Checkbox for Video Revenue
 st.header("Video Revenue Split")
+include_video_ads = st.checkbox("Include Video Ad Revenue", value=True)
+
+# Video Revenue Split Inputs
 video_direct_sold_percentage = st.slider("Percentage of Direct Sold Video Ads", min_value=0, max_value=100, value=20, step=1)
 video_open_market_percentage = 100 - video_direct_sold_percentage
 
@@ -34,18 +43,21 @@ video_open_market_percentage = 100 - video_direct_sold_percentage
 effective_cpm_video_direct = st.number_input("Effective CPM for Direct Sold Video Ads (€)", min_value=0.5, max_value=20.0, value=6.0)
 effective_cpm_video_open_market = st.number_input("Effective CPM for Open Marketplace Video Ads (€)", min_value=0.5, max_value=10.0, value=2.0)
 
-# Native Content Revenue
+# Checkbox for Native Content Revenue
 st.header("Native Content")
+include_native_content = st.checkbox("Include Native Content Revenue", value=True)
+
+# Native Content Revenue Inputs
 natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=10)
 avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=500.0)
 
 # Calculations
 monthly_subscription_revenue = subscribers * avg_sub_paid
-annual_subscription_revenue = monthly_subscription_revenue * 12
+annual_subscription_revenue = monthly_subscription_revenue * 12 if include_subscriptions else 0
 
 # Native Content Revenue Calculations
 monthly_native_revenue = natives_per_month * avg_cost_per_native
-annual_native_revenue = monthly_native_revenue * 12
+annual_native_revenue = monthly_native_revenue * 12 if include_native_content else 0
 
 # Display Ad Impressions Calculations
 base_impressions = (subscribers / 10000) * 2.5e6  # Scale with subscribers
@@ -60,7 +72,7 @@ direct_sold_display_revenue = (direct_sold_display_impressions / 1000) * effecti
 open_market_display_revenue = (open_market_display_impressions / 1000) * effective_cpm_open_market
 
 monthly_display_ad_revenue = direct_sold_display_revenue + open_market_display_revenue
-annual_display_ad_revenue = monthly_display_ad_revenue * 12
+annual_display_ad_revenue = monthly_display_ad_revenue * 12 if include_display_ads else 0
 
 # Video Ad Revenue Calculations
 direct_sold_video_impressions = total_impressions * (video_direct_sold_percentage / 100)
@@ -70,7 +82,7 @@ direct_sold_video_revenue = (direct_sold_video_impressions / 1000) * effective_c
 open_market_video_revenue = (open_market_video_impressions / 1000) * effective_cpm_video_open_market
 
 monthly_video_ad_revenue = direct_sold_video_revenue + open_market_video_revenue
-annual_video_ad_revenue = monthly_video_ad_revenue * 12
+annual_video_ad_revenue = monthly_video_ad_revenue * 12 if include_video_ads else 0
 
 # Total Revenue Calculations
 annual_total_revenue = annual_subscription_revenue + annual_display_ad_revenue + annual_video_ad_revenue + annual_native_revenue
@@ -83,7 +95,14 @@ st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
 st.header("Revenue Composition (Bar Chart)")
 revenue_data = {
     "Source": ["Subscriptions", "Direct Sold Display Ads", "Open Marketplace Display Ads", "Direct Sold Video Ads", "Open Marketplace Video Ads", "Native Articles"],
-    "Revenue": [annual_subscription_revenue, direct_sold_display_revenue * 12, open_market_display_revenue * 12, direct_sold_video_revenue * 12, open_market_video_revenue * 12, annual_native_revenue]
+    "Revenue": [
+        annual_subscription_revenue,
+        direct_sold_display_revenue * 12 if include_display_ads else 0,
+        open_market_display_revenue * 12 if include_display_ads else 0,
+        direct_sold_video_revenue * 12 if include_video_ads else 0,
+        open_market_video_revenue * 12 if include_video_ads else 0,
+        annual_native_revenue
+    ]
 }
 
 st.bar_chart(pd.DataFrame.from_dict(revenue_data).set_index('Source'))
