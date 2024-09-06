@@ -11,7 +11,7 @@ st.title("TOL Revenue Projections")
 # Input components in collapsible sections
 
 # Subs & Engagement Section
-with st.expander("Subs & Engagement", expanded=Falsee):
+with st.expander("Subs & Engagement", expanded=False):
     # Checkbox for Subscription Revenue
     include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
