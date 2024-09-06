@@ -8,48 +8,49 @@ st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="
 # Title
 st.title("TOL Revenue Projections")
 
-# Input components
-st.header("Subs & Engagement")
+# Input components in collapsible sections
 
-# Checkbox for Subscription Revenue
-include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
+# Subs & Engagement Section
+with st.expander("Subs & Engagement", expanded=True):
+    # Checkbox for Subscription Revenue
+    include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
-# Subscribers and Engagement
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=12000, step=500)
-engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.50)
+    # Subscribers and Engagement
+    subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=12000, step=500)
+    engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
+    avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.50)
 
-# Checkbox for Display Revenue
-st.header("Display Revenue Split")
-include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
+# Display Revenue Section
+with st.expander("Display Revenue Split", expanded=True):
+    include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
 
-# Display Revenue Split Inputs
-direct_sold_percentage = st.slider("Percentage of Direct Sold Display Ads", min_value=0, max_value=100, value=20, step=1)
-open_market_percentage = 100 - direct_sold_percentage
+    # Display Revenue Split Inputs
+    direct_sold_percentage = st.slider("Percentage of Direct Sold Display Ads", min_value=0, max_value=100, value=20, step=1)
+    open_market_percentage = 100 - direct_sold_percentage
 
-# Effective CPM Inputs for Display Ads
-effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Display Ads (€)", min_value=0.5, max_value=20.0, value=4.0)
-effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Display Ads (€)", min_value=0.5, max_value=10.0, value=1.0)
+    # Effective CPM Inputs for Display Ads
+    effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Display Ads (€)", min_value=0.5, max_value=20.0, value=4.0)
+    effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Display Ads (€)", min_value=0.5, max_value=10.0, value=1.0)
 
-# Checkbox for Video Revenue
-st.header("Video Revenue Split")
-include_video_ads = st.checkbox("Include Video Ad Revenue", value=True)
+# Video Revenue Section
+with st.expander("Video Revenue Split", expanded=True):
+    include_video_ads = st.checkbox("Include Video Ad Revenue", value=True)
 
-# Video Revenue Split Inputs
-video_direct_sold_percentage = st.slider("Percentage of Direct Sold Video Ads", min_value=0, max_value=100, value=10, step=1)
-video_open_market_percentage = 100 - video_direct_sold_percentage
+    # Video Revenue Split Inputs
+    video_direct_sold_percentage = st.slider("Percentage of Direct Sold Video Ads", min_value=0, max_value=100, value=10, step=1)
+    video_open_market_percentage = 100 - video_direct_sold_percentage
 
-# Effective CPM Inputs for Video Ads
-effective_cpm_video_direct = st.number_input("Effective CPM for Direct Sold Video Ads (€)", min_value=0.5, max_value=20.0, value=10.0)
-effective_cpm_video_open_market = st.number_input("Effective CPM for Open Marketplace Video Ads (€)", min_value=0.5, max_value=10.0, value=2.0)
+    # Effective CPM Inputs for Video Ads
+    effective_cpm_video_direct = st.number_input("Effective CPM for Direct Sold Video Ads (€)", min_value=0.5, max_value=20.0, value=10.0)
+    effective_cpm_video_open_market = st.number_input("Effective CPM for Open Marketplace Video Ads (€)", min_value=0.5, max_value=10.0, value=2.0)
 
-# Checkbox for Native Content Revenue
-st.header("Native Content")
-include_native_content = st.checkbox("Include Native Content Revenue", value=True)
+# Native Content Section
+with st.expander("Native Content", expanded=True):
+    include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 
-# Native Content Revenue Inputs
-natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=1)
-avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=4000.0)
+    # Native Content Revenue Inputs
+    natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=1)
+    avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=4000.0)
 
 # Calculations
 monthly_subscription_revenue = subscribers * avg_sub_paid
