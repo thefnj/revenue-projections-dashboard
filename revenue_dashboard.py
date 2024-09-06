@@ -9,15 +9,15 @@ st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="
 st.title("TOL Revenue Projections")
 
 # Input components
-st.header("Adjust Revenue Factors")
+st.header("Subs & Engagement")
 
 # Subscribers and Engagement
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=20000, step=500)
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=30.0, value=4.0)
+avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.0)
 
 # Ad Revenue Split
-st.header("Ad Revenue Split")
+st.header("Display Revenue Split")
 direct_sold_percentage = st.slider("Percentage of Direct Sold Ads", min_value=0, max_value=100, value=20, step=1)
 open_market_percentage = 100 - direct_sold_percentage
 
@@ -25,6 +25,7 @@ open_market_percentage = 100 - direct_sold_percentage
 effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Ads (€)", min_value=0.5, max_value=20.0, value=4.0)
 effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Ads (€)", min_value=0.5, max_value=10.0, value=1.0)
 
+st.header("Native Content")
 # Native Revenue
 native_articles = st.number_input("Native Articles Revenue (€)", min_value=0.0, value=5000.0)
 
