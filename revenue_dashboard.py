@@ -9,8 +9,8 @@ st.title("Digital Media Revenue Projections")
 # Input components
 st.header("Adjust Revenue Factors")
 
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=10000, step=500)
-avg_sub_paid = st.number_input("Average Monthly Subscription Paid ($)", min_value=1.0, max_value=100.0, value=10.0)
+subscribers = st.slider("Subscribers", min_value=1000, max_value=100000, value=10000, step=500)
+avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=20.0, value=2.0)
 impressions = st.slider("Digital Display Impressions (in thousands)", min_value=100, max_value=10000, value=1000, step=100)
 effective_cpm = st.number_input("Effective CPM ($)", min_value=0.5, max_value=50.0, value=5.0)
 native_articles = st.number_input("Native Articles Revenue ($)", min_value=0.0, value=5000.0)
