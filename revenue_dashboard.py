@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
@@ -14,7 +16,6 @@ subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=20
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
 avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=30.0, value=4.0)
 
-
 # Ad Revenue Split
 st.header("Ad Revenue Split")
 direct_sold_percentage = st.slider("Percentage of Direct Sold Ads", min_value=0, max_value=100, value=20, step=1)
@@ -28,7 +29,8 @@ effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace 
 native_articles = st.number_input("Native Articles Revenue (€)", min_value=0.0, value=5000.0)
 
 # Calculations
-subscription_revenue = subscribers * avg_sub_paid
+monthly_subscription_revenue = subscribers * avg_sub_paid
+annual_subscription_revenue = monthly_subscription_revenue * 12
 
 # Ad Impressions Calculations
 base_impressions = (subscribers / 10000) * 2.5e6  # Scale with subscribers
@@ -42,17 +44,24 @@ open_market_impressions = total_impressions * (open_market_percentage / 100)
 direct_sold_revenue = (direct_sold_impressions / 1000) * effective_cpm_direct
 open_market_revenue = (open_market_impressions / 1000) * effective_cpm_open_market
 
-ad_revenue = direct_sold_revenue + open_market_revenue
-total_revenue = subscription_revenue + ad_revenue + native_articles
+monthly_ad_revenue = direct_sold_revenue + open_market_revenue
+annual_ad_revenue = monthly_ad_revenue * 12
+
+annual_total_revenue = annual_subscription_revenue + annual_ad_revenue + native_articles
 
 # Displaying the results
-st.metric("Annual Digital Revenue", f"€{total_revenue:,.2f}")*12
+st.header("Revenue Breakdown")
+st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
 
-# Visualization
-st.header("Revenue Composition")
+# Visualization: Bar Chart
+st.header("Revenue Composition (Bar Chart)")
 revenue_data = {
     "Source": ["Subscriptions", "Direct Sold Ads", "Open Marketplace Ads", "Native Articles"],
-    "Revenue": [subscription_revenue, direct_sold_revenue, open_market_revenue, native_articles]
+    "Revenue": [annual_subscription_revenue, direct_sold_revenue * 12, open_market_revenue * 12, native_articles]
 }
 
-st.bar_chart(data=revenue_data['Revenue'])
+st.bar_chart(pd.DataFrame.from_dict(revenue_data).set_index('Source'))
+
+# Visualization: Pie Chart
+st.header("Revenue Split (Pie Chart)")
+fig,
