@@ -17,7 +17,7 @@ include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 # Subscribers and Engagement
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=12000, step=500)
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.0)
+avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.50)
 
 # Checkbox for Display Revenue
 st.header("Display Revenue Split")
