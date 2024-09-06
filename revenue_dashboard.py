@@ -46,13 +46,7 @@ ad_revenue = direct_sold_revenue + open_market_revenue
 total_revenue = subscription_revenue + ad_revenue + native_articles
 
 # Displaying the results
-st.header("Revenue Breakdown")
-st.metric("Subscription Revenue", f"€{subscription_revenue:,.2f}")
-st.metric("Ad Revenue (Direct Sold)", f"€{direct_sold_revenue:,.2f}")
-st.metric("Ad Revenue (Open Marketplace)", f"€{open_market_revenue:,.2f}")
-st.metric("Total Ad Revenue", f"€{ad_revenue:,.2f}")
-st.metric("Native Articles Revenue", f"€{native_articles:,.2f}")
-st.metric("Total Revenue", f"€{total_revenue:,.2f}")
+st.metric("Annual Digital Revenue", f"€{total_revenue:,.2f}")*12
 
 # Visualization
 st.header("Revenue Composition")
