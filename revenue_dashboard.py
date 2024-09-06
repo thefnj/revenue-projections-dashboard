@@ -11,7 +11,7 @@ st.title("TOL Revenue Projections")
 # Input components in collapsible sections
 
 # Subs & Engagement Section
-with st.expander("Subs & Engagement", expanded=True):
+with st.expander("Subs & Engagement", expanded=Falsee):
     # Checkbox for Subscription Revenue
     include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
@@ -21,7 +21,7 @@ with st.expander("Subs & Engagement", expanded=True):
     avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.50)
 
 # Display Revenue Section
-with st.expander("Display Revenue Split", expanded=True):
+with st.expander("Display Revenue Split", expanded=False):
     include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
 
     # Display Revenue Split Inputs
@@ -33,7 +33,7 @@ with st.expander("Display Revenue Split", expanded=True):
     effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Display Ads (€)", min_value=0.5, max_value=10.0, value=1.0)
 
 # Video Revenue Section
-with st.expander("Video Revenue Split", expanded=True):
+with st.expander("Video Revenue Split", expanded=False):
     include_video_ads = st.checkbox("Include Video Ad Revenue", value=True)
 
     # Video Revenue Split Inputs
@@ -45,7 +45,7 @@ with st.expander("Video Revenue Split", expanded=True):
     effective_cpm_video_open_market = st.number_input("Effective CPM for Open Marketplace Video Ads (€)", min_value=0.5, max_value=10.0, value=2.0)
 
 # Native Content Section
-with st.expander("Native Content", expanded=True):
+with st.expander("Native Content", expanded=False):
     include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 
     # Native Content Revenue Inputs
