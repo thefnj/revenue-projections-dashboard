@@ -15,9 +15,9 @@ st.header("Subs & Engagement")
 include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
 # Subscribers and Engagement
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=20000, step=500)
+subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=12000, step=500)
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.0)
+avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=4.5)
 
 # Checkbox for Display Revenue
 st.header("Display Revenue Split")
@@ -36,11 +36,11 @@ st.header("Video Revenue Split")
 include_video_ads = st.checkbox("Include Video Ad Revenue", value=True)
 
 # Video Revenue Split Inputs
-video_direct_sold_percentage = st.slider("Percentage of Direct Sold Video Ads", min_value=0, max_value=100, value=20, step=1)
+video_direct_sold_percentage = st.slider("Percentage of Direct Sold Video Ads", min_value=0, max_value=100, value=10, step=1)
 video_open_market_percentage = 100 - video_direct_sold_percentage
 
 # Effective CPM Inputs for Video Ads
-effective_cpm_video_direct = st.number_input("Effective CPM for Direct Sold Video Ads (€)", min_value=0.5, max_value=20.0, value=6.0)
+effective_cpm_video_direct = st.number_input("Effective CPM for Direct Sold Video Ads (€)", min_value=0.5, max_value=20.0, value=12.0)
 effective_cpm_video_open_market = st.number_input("Effective CPM for Open Marketplace Video Ads (€)", min_value=0.5, max_value=10.0, value=2.0)
 
 # Checkbox for Native Content Revenue
@@ -48,8 +48,8 @@ st.header("Native Content")
 include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 
 # Native Content Revenue Inputs
-natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=10)
-avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=500.0)
+natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=1)
+avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=4000.0)
 
 # Calculations
 monthly_subscription_revenue = subscribers * avg_sub_paid
