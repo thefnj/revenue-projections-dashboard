@@ -12,7 +12,7 @@ st.header("Adjust Revenue Factors")
 # Subscribers and Engagement
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=20000, step=500)
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=100.0, value=10.0)
+avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=30.0, value=4.0)
 
 
 # Ad Revenue Split
