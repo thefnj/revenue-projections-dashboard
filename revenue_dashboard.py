@@ -19,12 +19,12 @@ direct_sold_percentage = st.slider("Percentage of Direct Sold Ads", min_value=0,
 open_market_percentage = 100 - direct_sold_percentage
 
 # Effective CPM Inputs
-effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Ads ($)", min_value=0.5, max_value=50.0, value=10.0)
-effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Ads ($)", min_value=0.5, max_value=50.0, value=5.0)
+effective_cpm_direct = st.number_input("Effective CPM for Direct Sold Ads (€)", min_value=0.5, max_value=50.0, value=10.0)
+effective_cpm_open_market = st.number_input("Effective CPM for Open Marketplace Ads (€)", min_value=0.5, max_value=50.0, value=5.0)
 
 # Subscription Revenue
-avg_sub_paid = st.number_input("Average Monthly Subscription Paid ($)", min_value=1.0, max_value=100.0, value=10.0)
-native_articles = st.number_input("Native Articles Revenue ($)", min_value=0.0, value=5000.0)
+avg_sub_paid = st.number_input("Average Monthly Subscription Paid (€)", min_value=1.0, max_value=100.0, value=10.0)
+native_articles = st.number_input("Native Articles Revenue (€)", min_value=0.0, value=5000.0)
 
 # Calculations
 subscription_revenue = subscribers * avg_sub_paid
@@ -46,12 +46,12 @@ total_revenue = subscription_revenue + ad_revenue + native_articles
 
 # Displaying the results
 st.header("Revenue Breakdown")
-st.metric("Subscription Revenue", f"${subscription_revenue:,.2f}")
-st.metric("Ad Revenue (Direct Sold)", f"${direct_sold_revenue:,.2f}")
-st.metric("Ad Revenue (Open Marketplace)", f"${open_market_revenue:,.2f}")
-st.metric("Total Ad Revenue", f"${ad_revenue:,.2f}")
-st.metric("Native Articles Revenue", f"${native_articles:,.2f}")
-st.metric("Total Revenue", f"${total_revenue:,.2f}")
+st.metric("Subscription Revenue", f"€{subscription_revenue:,.2f}")
+st.metric("Ad Revenue (Direct Sold)", f"€{direct_sold_revenue:,.2f}")
+st.metric("Ad Revenue (Open Marketplace)", f"€{open_market_revenue:,.2f}")
+st.metric("Total Ad Revenue", f"€{ad_revenue:,.2f}")
+st.metric("Native Articles Revenue", f"€{native_articles:,.2f}")
+st.metric("Total Revenue", f"€{total_revenue:,.2f}")
 
 # Visualization
 st.header("Revenue Composition")
