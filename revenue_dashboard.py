@@ -60,7 +60,7 @@ monthly_native_revenue = natives_per_month * avg_cost_per_native
 annual_native_revenue = monthly_native_revenue * 12 if include_native_content else 0
 
 # Display Ad Impressions Calculations
-base_impressions_display = (subscribers / 10000) * 2.5e6  # Scale with subscribers
+base_impressions_display = (subscribers / 12000) * 2.5e6  # Scale with subscribers
 additional_impressions_display = (engagement_increase / 100) * base_impressions_display  # Extra impressions from engagement
 total_impressions_display = base_impressions_display + additional_impressions_display
 
@@ -75,7 +75,7 @@ monthly_display_ad_revenue = direct_sold_display_revenue + open_market_display_r
 annual_display_ad_revenue = monthly_display_ad_revenue * 12 if include_display_ads else 0
 
 # Video Ad Impressions Calculations (with baseline of 50,000 impressions for 10,000 subscribers)
-base_impressions_video = (subscribers / 10000) * 50000  # Scale video impressions with subscribers
+base_impressions_video = (subscribers / 12000) * 50000  # Scale video impressions with subscribers
 additional_impressions_video = (engagement_increase / 100) * base_impressions_video  # Extra impressions from engagement
 total_impressions_video = base_impressions_video + additional_impressions_video
 
@@ -99,8 +99,8 @@ annual_total_revenue = annual_subscription_revenue + annual_total_display_revenu
 # Displaying the results
 st.header("Revenue Breakdown")
 st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
-st.metric("Total Display Impressions", f"{total_impressions_display:,.0f}")
-st.metric("Total Video Impressions", f"{total_impressions_video:,.0f}")
+st.metric("Monthly Display Impressions", f"{total_impressions_display:,.0f}")
+st.metric("Monthly Video Impressions", f"{total_impressions_video:,.0f}")
 
 # Visualization: Pie Chart
 st.header("Revenue Split (Pie Chart)")
