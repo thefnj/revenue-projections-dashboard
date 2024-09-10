@@ -79,13 +79,13 @@ st.metric("Annual Video Plays", f"{adjusted_video_plays:,.0f}")
 # Create the combined revenue data dictionary dynamically
 combined_revenue_data = {}
 if include_subscriptions:
-    combined_revenue_data["Subscriptions"] = annual_subscription_revenue
+    combined_revenue_data["Subs"] = annual_subscription_revenue
 if include_display_ads:
-    combined_revenue_data["Display Ads"] = annual_display_ad_revenue
+    combined_revenue_data["Display"] = annual_display_ad_revenue
 if include_native_content:
-    combined_revenue_data["Native Articles"] = annual_native_revenue
+    combined_revenue_data["Native"] = annual_native_revenue
 if include_video_content:
-    combined_revenue_data["Video Ads"] = annual_video_ad_revenue
+    combined_revenue_data["Video"] = annual_video_ad_revenue
 
 # Visualization: Pie Chart with Money Totals
 st.header("Revenue Split")
