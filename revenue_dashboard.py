@@ -10,6 +10,8 @@ initial_display_impressions = 84000000  # Baseline total display ad impressions 
 rcpm_display = 3.10  # Overall rCPM for display ads in euros
 natives_per_month = 2  # Starting number of native articles per month
 avg_cost_per_native = 4000.0  # Starting average revenue per native article in euros
+initial_video_plays = 1800000  # Baseline total video plays per year
+rcpm_video = 3.10  # Overall rCPM for video ads in euros
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
@@ -29,9 +31,24 @@ overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min
 natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=natives_per_month, step=1)
 avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=avg_cost_per_native, step=100.0)
 
-# Adjust page views and display impressions based on subscribers and engagement rate
+# Video Ad Revenue Section
+overall_rcpm_video = st.number_input("Overall rCPM for Video Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_video, step=0.1)
+
+# Display checkboxes in a row
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
+with col2:
+    include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
+with col3:
+    include_native_content = st.checkbox("Include Native Content Revenue", value=True)
+with col4:
+    include_video_content = st.checkbox("Include Video Ad Revenue", value=False)
+
+# Adjust page views, display impressions, and video plays based on subscribers and engagement rate
 adjusted_page_views = initial_page_views * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
 adjusted_display_impressions = initial_display_impressions * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
+adjusted_video_plays = initial_video_plays * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
 
 # Calculations
 monthly_subscription_revenue = subscribers * avg_sub_paid
@@ -44,25 +61,20 @@ annual_native_revenue = monthly_native_revenue * 12 if include_native_content el
 # Display Ad Revenue Calculations using overall rCPM
 annual_display_ad_revenue = (adjusted_display_impressions / 1000) * overall_rcpm_display if include_display_ads else 0
 
+# Video Ad Revenue Calculations using overall rCPM
+annual_video_ad_revenue = (adjusted_video_plays / 1000) * overall_rcpm_video if include_video_content else 0
+
 # Total Revenue Calculations
 annual_total_revenue = (
-    annual_subscription_revenue + annual_display_ad_revenue + annual_native_revenue
+    annual_subscription_revenue + annual_display_ad_revenue + annual_native_revenue + annual_video_ad_revenue
 )
-
-# Display checkboxes in a row
-col1, col2, col3 = st.columns(3)
-with col1:
-    include_subscriptions = st.checkbox("Subs", value=True)
-with col2:
-    include_display_ads = st.checkbox("Display", value=True)
-with col3:
-    include_native_content = st.checkbox("Native", value=True)
 
 # Displaying the Results
 st.header("Revenue Breakdown")
 st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
 st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
 st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
+st.metric("Annual Video Plays", f"{adjusted_video_plays:,.0f}")
 
 # Visualization: Pie Chart with Money Totals
 st.header("Revenue Split (Pie Chart)")
@@ -71,7 +83,8 @@ fig, ax = plt.subplots()
 combined_revenue_data = {
     "Subscriptions": annual_subscription_revenue,
     "Display Ads": annual_display_ad_revenue,
-    "Native Articles": annual_native_revenue
+    "Native Articles": annual_native_revenue,
+    "Video Ads": annual_video_ad_revenue
 }
 
 # Plot pie chart with money totals
