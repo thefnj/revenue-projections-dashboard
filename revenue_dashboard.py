@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Define your initial values
+# Define your initial values (yearly totals)
 subscribers = 20000  # Initial value for subscribers
 arpu = 4.60  # Average Revenue Per User in euros
-page_views = 1500000  # Total page views
-display_impressions = 7000000  # Total display ad impressions
+page_views = 18000000  # Total page views per year
+display_impressions = 84000000  # Total display ad impressions per year
 rcpm_display = 3.10  # Overall rCPM for display ads in euros
 natives_per_month = 2  # Starting number of native articles per month
 avg_cost_per_native = 4000.0  # Starting average revenue per native article in euros
@@ -41,14 +41,13 @@ monthly_native_revenue = natives_per_month * avg_cost_per_native
 annual_native_revenue = monthly_native_revenue * 12 if include_native_content else 0
 
 # Display Ad Revenue Calculations using overall rCPM
-# Correct calculation to scale display impressions based on the number of subscribers
-base_impressions_display = (subscribers / 12000) * display_impressions  # Scale with baseline subscribers
+# Calculate the total impressions based on the initial baseline set at the start of the code
+base_impressions_display = display_impressions * (subscribers / subscribers)  # Use baseline total directly
 additional_impressions_display = (engagement_increase / 100) * base_impressions_display
 total_impressions_display = base_impressions_display + additional_impressions_display
 
 # Use overall rCPM for Display Ads
-monthly_display_ad_revenue = (total_impressions_display / 1000) * overall_rcpm_display
-annual_display_ad_revenue = monthly_display_ad_revenue * 12 if include_display_ads else 0
+annual_display_ad_revenue = (total_impressions_display / 1000) * overall_rcpm_display if include_display_ads else 0
 
 # Total Revenue Calculations
 annual_total_revenue = (
@@ -58,8 +57,8 @@ annual_total_revenue = (
 # Displaying the Results
 st.header("Revenue Breakdown")
 st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
-st.metric("Monthly Display Impressions", f"{total_impressions_display:,.0f}")
-st.metric("Page Views", f"{page_views:,.0f}")
+st.metric("Annual Display Impressions", f"{total_impressions_display:,.0f}")
+st.metric("Annual Page Views", f"{page_views:,.0f}")
 
 # Visualization: Pie Chart
 st.header("Revenue Split (Pie Chart)")
