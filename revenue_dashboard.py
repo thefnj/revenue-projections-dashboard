@@ -19,16 +19,22 @@ st.title("TOL Revenue Projections")
 
 # Subscribers and Engagement Section
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=initial_subscribers, step=500)
 avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=arpu, step=0.1)
 
+# Display checkboxes in a row
+col1, col2, col3 = st.columns(3)
+with col1:
+    include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
+with col2:
+    include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
+with col3:
+    include_native_content = st.checkbox("Include Native Content Revenue", value=True)
+
 # Display Revenue Section
-include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
 overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_display, step=0.1)
 
 # Native Content Revenue Section
-include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=natives_per_month, step=1)
 avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=avg_cost_per_native, step=100.0)
 
@@ -58,7 +64,7 @@ st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
 st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
 st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
 
-# Visualization: Pie Chart
+# Visualization: Pie Chart with Money Totals
 st.header("Revenue Split (Pie Chart)")
 fig, ax = plt.subplots()
 
@@ -68,6 +74,8 @@ combined_revenue_data = {
     "Native Articles": annual_native_revenue
 }
 
-ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(), autopct='%1.1f%%', startangle=140)
+# Plot pie chart with money totals
+ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(),
+       autopct=lambda p: f'€{p * sum(combined_revenue_data.values()) / 100:,.0f}', startangle=140)
 ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
 st.pyplot(fig)
