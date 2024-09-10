@@ -18,8 +18,8 @@ st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="
 st.title("TOL Revenue Projections")
 
 # Subscribers and Engagement Section
-include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
+include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=subscribers, step=500)
 avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=arpu, step=0.1)
 
