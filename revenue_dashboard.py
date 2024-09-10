@@ -88,7 +88,7 @@ if include_video_content:
     combined_revenue_data["Video Ads"] = annual_video_ad_revenue
 
 # Visualization: Pie Chart with Money Totals
-st.header("Revenue Split (Pie Chart)")
+st.header("Revenue Split")
 fig, ax = plt.subplots()
 
 # Plot pie chart with money totals
