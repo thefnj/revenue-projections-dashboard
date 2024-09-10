@@ -41,12 +41,12 @@ monthly_native_revenue = natives_per_month * avg_cost_per_native
 annual_native_revenue = monthly_native_revenue * 12 if include_native_content else 0
 
 # Display Ad Revenue Calculations using overall rCPM
-# Calculate the total impressions based on the initial baseline set at the start of the code
-base_impressions_display = display_impressions * (subscribers / subscribers)  # Use baseline total directly
-additional_impressions_display = (engagement_increase / 100) * base_impressions_display
+# Use initial display impressions and adjust for engagement
+base_impressions_display = display_impressions  # Start with the total annual display impressions
+additional_impressions_display = (engagement_increase / 100) * base_impressions_display  # Adjust for engagement increase
 total_impressions_display = base_impressions_display + additional_impressions_display
 
-# Use overall rCPM for Display Ads
+# Calculate annual display ad revenue using the overall rCPM
 annual_display_ad_revenue = (total_impressions_display / 1000) * overall_rcpm_display if include_display_ads else 0
 
 # Total Revenue Calculations
