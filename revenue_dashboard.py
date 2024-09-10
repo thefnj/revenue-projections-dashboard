@@ -37,13 +37,13 @@ overall_rcpm_video = st.number_input("Overall rCPM for Video Ads (€)", min_val
 # Display checkboxes in a row
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
+    include_subscriptions = st.checkbox("Subs", value=True)
 with col2:
-    include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
+    include_display_ads = st.checkbox("Display", value=True)
 with col3:
-    include_native_content = st.checkbox("Include Native Content Revenue", value=True)
+    include_native_content = st.checkbox("Native", value=True)
 with col4:
-    include_video_content = st.checkbox("Include Video Ad Revenue", value=False)
+    include_video_content = st.checkbox("Video", value=False)
 
 # Adjust page views, display impressions, and video plays based on subscribers and engagement rate
 adjusted_page_views = initial_page_views * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
