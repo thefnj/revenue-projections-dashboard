@@ -1,6 +1,26 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# Define scope and authenticate using service account credentials
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name('your-credentials-file.json', scope)
+client = gspread.authorize(creds)
+
+# Open the Google Sheet by name
+sheet = client.open("Your Google Sheet Name").sheet1  # Or use `client.open_by_url("URL")`
+
+# Get all values and load into a pandas DataFrame
+data = sheet.get_all_records()
+df = pd.DataFrame(data)
+
+# Now, you can access the values in the DataFrame, e.g.,:
+subs = df.loc[df['Metric'] == 'Subscribers', 'Value'].values[0]
+page_views = df.loc[df['Metric'] == 'Page Views', 'Value'].values[0]
+
+
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
