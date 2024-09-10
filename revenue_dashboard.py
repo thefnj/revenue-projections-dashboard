@@ -1,29 +1,16 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 
-# Define the scope and authenticate using credentials from Streamlit secrets
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["google"], scope)
-client = gspread.authorize(creds)
-
-# Open the Google Sheet by name
-sheet = client.open("Your Google Sheet Name").sheet1  # Replace with your Google Sheet name
-
-# Get all values and load into a pandas DataFrame
-data = sheet.get_all_records()
-df = pd.DataFrame(data)
-
-
-# Fetch data from Google Sheet
-subscribers = int(df.loc[df['Monthly'] == 'Subscribers', 'FY 24'].values[0])
-arpu = float(df.loc[df['Monthly'] == 'ARPU', 'FY 24'].values[0].replace('€', ''))
-page_views = int(df.loc[df['Monthly'] == 'Page Views', 'FY 24'].values[0].replace(',', ''))
-display_impressions = int(df.loc[df['Monthly'] == 'Display Impressions', 'FY 24'].values[0].replace(',', ''))
-rcpm_display = float(df.loc[df['Monthly'] == 'rCPM', 'FY 24'].values[0].replace('€', ''))
-display_revenue = float(df.loc[df['Monthly'] == 'Display Revenue', 'FY 24'].values[0].replace('€', '').replace(',', ''))
+# Define your values at the start of the code
+subscribers = 20000  # Initial value for subscribers
+arpu = 4.67  # Average Revenue Per User in euros
+page_views = 1500000  # Monthly page views
+display_impressions = 7000000  # Monthly display ad impressions
+rcpm_display = 3.10  # Overall rCPM for display ads in euros
+display_revenue = 22500  # Display revenue in euros
+natives_per_month = 1  # Number of native articles per month
+avg_cost_per_native = 4000.0  # Average revenue per native article in euros
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
@@ -38,7 +25,7 @@ with st.expander("Subs & Engagement", expanded=False):
     # Checkbox for Subscription Revenue
     include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
 
-    # Subscribers and Engagement (using Google Sheet data)
+    # Subscribers and Engagement (using predefined data)
     subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=subscribers, step=500)
     engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
     avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=arpu)
@@ -47,16 +34,16 @@ with st.expander("Subs & Engagement", expanded=False):
 with st.expander("Display Revenue", expanded=False):
     include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
 
-    # Overall rCPM for Display Ads from Google Sheet or as an input
+    # Overall rCPM for Display Ads from predefined data or as an input
     overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_display)
 
-# Native Content Section (if needed for completeness)
+# Native Content Section
 with st.expander("Native Content", expanded=False):
     include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 
     # Native Content Revenue Inputs
-    natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=1)
-    avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=4000.0)
+    natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=natives_per_month)
+    avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=avg_cost_per_native)
 
 # Step 3: Calculations
 
