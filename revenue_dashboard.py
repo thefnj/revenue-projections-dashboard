@@ -22,15 +22,6 @@ engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, m
 subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=initial_subscribers, step=500)
 avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=arpu, step=0.1)
 
-# Display checkboxes in a row
-col1, col2, col3 = st.columns(3)
-with col1:
-    include_subscriptions = st.checkbox("Include Subscription Revenue", value=True)
-with col2:
-    include_display_ads = st.checkbox("Include Display Ad Revenue", value=True)
-with col3:
-    include_native_content = st.checkbox("Include Native Content Revenue", value=True)
-
 # Display Revenue Section
 overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_display, step=0.1)
 
@@ -57,6 +48,15 @@ annual_display_ad_revenue = (adjusted_display_impressions / 1000) * overall_rcpm
 annual_total_revenue = (
     annual_subscription_revenue + annual_display_ad_revenue + annual_native_revenue
 )
+
+# Display checkboxes in a row
+col1, col2, col3 = st.columns(3)
+with col1:
+    include_subscriptions = st.checkbox("Subs", value=True)
+with col2:
+    include_display_ads = st.checkbox("Display", value=True)
+with col3:
+    include_native_content = st.checkbox("Native", value=True)
 
 # Displaying the Results
 st.header("Revenue Breakdown")
