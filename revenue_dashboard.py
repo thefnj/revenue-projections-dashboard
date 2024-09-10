@@ -4,18 +4,18 @@ import matplotlib.pyplot as plt
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# Step 1: Connect to Google Sheets and Read Data
-# Define scope and authenticate using service account credentials
+# Define the scope and authenticate using credentials from Streamlit secrets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name('your-credentials-file.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["google"], scope)
 client = gspread.authorize(creds)
 
 # Open the Google Sheet by name
-sheet = client.open("Your Google Sheet Name").sheet1
+sheet = client.open("Your Google Sheet Name").sheet1  # Replace with your Google Sheet name
 
 # Get all values and load into a pandas DataFrame
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
+
 
 # Fetch data from Google Sheet
 subscribers = int(df.loc[df['Monthly'] == 'Subscribers', 'FY 24'].values[0])
