@@ -10,7 +10,7 @@ display_impressions = 7000000  # Total display ad impressions
 rcpm_display = 3.10  # Overall rCPM for display ads in euros
 display_revenue = 22500  # Display revenue in euros
 natives_per_month = 2  # Starting number of native articles per month
-avg_cost_per_native = 4000.0  # Average revenue per native article in euros
+avg_cost_per_native = 4000.0  # Starting average revenue per native article in euros
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
@@ -31,7 +31,7 @@ overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min
 # Native Content Revenue Section
 include_native_content = st.checkbox("Include Native Content Revenue", value=True)
 natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=natives_per_month, step=1)
-avg_cost_per_native = 4000.0  # Each native article is worth €4,000 (fixed value)
+avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=avg_cost_per_native, step=100.0)
 
 # Calculations
 monthly_subscription_revenue = subscribers * avg_sub_paid
@@ -59,6 +59,7 @@ annual_total_revenue = (
 st.header("Revenue Breakdown")
 st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
 st.metric("Monthly Display Impressions", f"{total_impressions_display:,.0f}")
+st.metric("Page Views", f"{page_views:,.0f}")
 
 # Visualization: Pie Chart
 st.header("Revenue Split (Pie Chart)")
