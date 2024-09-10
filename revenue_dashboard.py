@@ -76,19 +76,23 @@ st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
 st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
 st.metric("Annual Video Plays", f"{adjusted_video_plays:,.0f}")
 
+# Create the combined revenue data dictionary dynamically
+combined_revenue_data = {}
+if include_subscriptions:
+    combined_revenue_data["Subscriptions"] = annual_subscription_revenue
+if include_display_ads:
+    combined_revenue_data["Display Ads"] = annual_display_ad_revenue
+if include_native_content:
+    combined_revenue_data["Native Articles"] = annual_native_revenue
+if include_video_content:
+    combined_revenue_data["Video Ads"] = annual_video_ad_revenue
+
 # Visualization: Pie Chart with Money Totals
 st.header("Revenue Split (Pie Chart)")
 fig, ax = plt.subplots()
 
-combined_revenue_data = {
-    "Subscriptions": annual_subscription_revenue,
-    "Display Ads": annual_display_ad_revenue,
-    "Native Articles": annual_native_revenue,
-    "Video Ads": annual_video_ad_revenue
-}
-
 # Plot pie chart with money totals
 ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(),
-       autopct=lambda p: f'€{p * sum(combined_revenue_data.values()) / 100:,.0f}', startangle=140)
+       autopct=lambda p: f'€{p * sum(combined_revenue_data.values()) / 100:,.0f}' if p > 0 else '', startangle=140)
 ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
 st.pyplot(fig)
