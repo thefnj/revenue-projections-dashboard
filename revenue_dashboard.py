@@ -34,8 +34,9 @@ avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)"
 # Video Ad Revenue Section
 overall_rcpm_video = st.number_input("Overall rCPM for Video Ads (€)", min_value=0.5, max_value=20.0, value=DEFAULT_RCPM_VIDEO, step=0.1)
 
-# Slider for adjusting video impressions
-adjusted_video_impressions = st.slider("Adjusted Video Impressions", min_value=1000000, max_value=10000000, value=INITIAL_VIDEO_IMPRESSIONS, step=50000)
+# Slider for adjusting video impressions percentage
+video_impression_change = st.slider("Video Impressions Change (%)", min_value=-50, max_value=100, value=0, step=1)
+adjusted_video_impressions = INITIAL_VIDEO_IMPRESSIONS * (1 + video_impression_change / 100)
 
 # Display checkboxes in a row
 col1, col2, col3, col4 = st.columns(4)
@@ -82,6 +83,7 @@ st.header("Revenue Breakdown")
 col_left, col_right = st.columns(2)
 with col_left:
     st.subheader("Monthly Breakdown")
+    st.metric("Total Monthly Revenue", f"€{annual_total_revenue / 12:,.2f}")
     st.metric("Monthly Subscription Revenue", f"€{annual_subscription_revenue / 12:,.2f}")
     st.metric("Monthly Native Revenue", f"€{annual_native_revenue / 12:,.2f}")
     st.metric("Monthly Display Ad Revenue", f"€{annual_display_ad_revenue / 12:,.2f}")
@@ -89,10 +91,11 @@ with col_left:
 
 with col_right:
     st.subheader("Yearly Totals")
-    st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
-    st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
-    st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
-    st.metric("Annual Video Plays", f"{adjusted_video_impressions:,.0f}")
+    st.metric("Total Annual Revenue", f"€{annual_total_revenue:,.2f}")
+    st.metric("Annual Subscription Revenue", f"€{annual_subscription_revenue:,.2f}")
+    st.metric("Annual Native Revenue", f"€{annual_native_revenue:,.2f}")
+    st.metric("Annual Display Ad Revenue", f"€{annual_display_ad_revenue:,.2f}")
+    st.metric("Annual Video Ad Revenue", f"€{annual_video_ad_revenue:,.2f}")
 
 # Create the combined revenue data dictionary dynamically
 combined_revenue_data = {}
@@ -115,16 +118,18 @@ ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(),
 ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
 st.pyplot(fig)
 
-# Bar chart to show changes relative to starting positions
-st.header("Relative Changes to Starting Variables")
-relative_changes = {
-    'Subscribers': subscribers / INITIAL_SUBSCRIBERS,
-    'Display Impressions': adjusted_display_impressions / INITIAL_DISPLAY_IMPRESSIONS,
-    'Video Impressions': adjusted_video_impressions / INITIAL_VIDEO_IMPRESSIONS,
-    'Page Views': adjusted_page_views / INITIAL_PAGE_VIEWS
+# Improved Visualization: Line Chart for Changes Relative to Starting Figures
+st.header("Changes Relative to Starting Values")
+changes = {
+    'Subscribers': subscribers / INITIAL_SUBSCRIBERS - 1,
+    'Display Impressions': adjusted_display_impressions / INITIAL_DISPLAY_IMPRESSIONS - 1,
+    'Video Impressions': adjusted_video_impressions / INITIAL_VIDEO_IMPRESSIONS - 1,
+    'Page Views': adjusted_page_views / INITIAL_PAGE_VIEWS - 1
 }
 
 fig, ax = plt.subplots()
-ax.bar(relative_changes.keys(), relative_changes.values())
-ax.set_ylabel("Relative Change (Multiple of Initial)")
+ax.plot(list(changes.keys()), [v * 100 for v in changes.values()], marker='o', linestyle='-')
+ax.axhline(0, color='gray', linewidth=0.8)
+ax.set_ylabel("Percentage Change (%)")
+ax.set_title("Percentage Change from Initial Values")
 st.pyplot(fig)
