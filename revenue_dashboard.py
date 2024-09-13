@@ -10,8 +10,8 @@ initial_display_impressions = 84000000  # Baseline total display ad impressions 
 rcpm_display = 3.10  # Overall rCPM for display ads in euros
 natives_per_month = 2  # Starting number of native articles per month
 avg_cost_per_native = 4000.0  # Starting average revenue per native article in euros
-initial_video_plays = 1800000  # Baseline total video plays per year
-rcpm_video = 3.10  # Overall rCPM for video ads in euros
+initial_video_plays = 3650000  # Baseline total video plays per year
+rcpm_video = 8.10  # Overall rCPM for video ads in euros
 
 # Page configuration
 st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
