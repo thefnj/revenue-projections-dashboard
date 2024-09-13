@@ -96,41 +96,41 @@ col_left, col_right = st.columns(2)
 
 # Monthly Breakdown
 with col_left:
-    st.subheader("Monthly Breakdown")
+    st.subheader("Monthly")
     if include_subscriptions:
-        st.metric("Monthly Subscription Revenue", f"€{round(annual_subscription_revenue / 12):,}")
+        st.metric("Subs", f"€{round(annual_subscription_revenue / 12):,}")
     if include_native_content:
-        st.metric("Monthly Native Revenue", f"€{round(annual_native_revenue / 12):,}")
+        st.metric("Native", f"€{round(annual_native_revenue / 12):,}")
     if include_display_ads:
-        st.metric("Monthly Display Ad Revenue", f"€{round(annual_display_ad_revenue / 12):,}")
+        st.metric("Display", f"€{round(annual_display_ad_revenue / 12):,}")
     if include_video_content:
-        st.metric("Monthly Video Ad Revenue", f"€{round(annual_video_ad_revenue / 12):,}")
+        st.metric("Video", f"€{round(annual_video_ad_revenue / 12):,}")
     if include_other_revenue_option:
-        st.metric("Monthly Other Revenue", f"€{round(other_annual_revenue / 12):,}")
+        st.metric("Other Revenue", f"€{round(other_annual_revenue / 12):,}")
 
     # Highlighted total at the bottom
     st.markdown(
-        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 5px;'>Total Monthly Revenue: €{round(annual_total_revenue / 12):,}</h4>",
+        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 2px;'>Total Monthly Revenue: €{round(annual_total_revenue / 12):,}</h4>",
         unsafe_allow_html=True
     )
 
 # Yearly Totals
 with col_right:
-    st.subheader("Yearly Totals")
+    st.subheader("Annual")
     if include_subscriptions:
-        st.metric("Annual Subscription Revenue", f"€{annual_subscription_revenue:,}")
+        st.metric("Subs", f"€{annual_subscription_revenue:,}")
     if include_native_content:
-        st.metric("Annual Native Revenue", f"€{annual_native_revenue:,}")
+        st.metric("Native", f"€{annual_native_revenue:,}")
     if include_display_ads:
-        st.metric("Annual Display Ad Revenue", f"€{annual_display_ad_revenue:,}")
+        st.metric("Display", f"€{annual_display_ad_revenue:,}")
     if include_video_content:
-        st.metric("Annual Video Ad Revenue", f"€{annual_video_ad_revenue:,}")
+        st.metric("Video", f"€{annual_video_ad_revenue:,}")
     if include_other_revenue_option:
-        st.metric("Annual Other Revenue", f"€{other_annual_revenue:,}")
+        st.metric("Other Revenue", f"€{other_annual_revenue:,}")
 
     # Highlighted total at the bottom
     st.markdown(
-        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 5px;'>Total Annual Revenue: €{round(annual_total_revenue):,}</h4>",
+        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 2px;'>Total Annual Revenue: €{round(annual_total_revenue):,}</h4>",
         unsafe_allow_html=True
     )
 
