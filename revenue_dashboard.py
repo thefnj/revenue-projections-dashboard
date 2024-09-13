@@ -111,7 +111,7 @@ with col_left:
     st.markdown(
         f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px; text-align: left;'>"
         f"<span style='font-size:12px; display:block;'>Total Monthly Revenue</span>"
-        f"<span style='font-size:24px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
+        f"<span style='font-size:44px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
         f"</div>",
         unsafe_allow_html=True
     )
@@ -134,7 +134,7 @@ with col_right:
     st.markdown(
         f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px; text-align: left;'>"
         f"<span style='font-size:12px; display:block;'>Total Annual Revenue</span>"
-        f"<span style='font-size:24px; font-weight:bold;'>€{round(annual_total_revenue):,}</span>"
+        f"<span style='font-size:44px; font-weight:bold;'>€{round(annual_total_revenue):,}</span>"
         f"</div>",
         unsafe_allow_html=True
     )
