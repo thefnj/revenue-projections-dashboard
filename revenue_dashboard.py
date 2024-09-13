@@ -62,4 +62,41 @@ def calculate_annual_revenue(subscribers, arpu, include_subs, native_count, avg_
     annual_display_ad_revenue = (display_impressions / 1000) * rcpm_display if include_display else 0
     annual_video_ad_revenue = (video_impressions / 1000) * rcpm_video if include_video else 0
 
-    total_annual_revenue = annual_subscription_revenue + annual_display_ad
+    total_annual_revenue = annual_subscription_revenue + annual_display_ad_revenue + annual_native_revenue + annual_video_ad_revenue
+
+    return total_annual_revenue, annual_subscription_revenue, annual_native_revenue, annual_display_ad_revenue, annual_video_ad_revenue
+
+# Perform revenue calculations
+annual_total_revenue, annual_subscription_revenue, annual_native_revenue, annual_display_ad_revenue, annual_video_ad_revenue = calculate_annual_revenue(
+    subscribers, avg_sub_paid, include_subscriptions, natives_per_month, avg_cost_per_native,
+    include_native_content, adjusted_display_impressions, overall_rcpm_display,
+    include_display_ads, adjusted_video_impressions, overall_rcpm_video, include_video_content
+)
+
+# Displaying the Results
+st.header("Revenue Breakdown")
+st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
+st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
+st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
+st.metric("Annual Video Plays", f"{adjusted_video_impressions:,.0f}")
+
+# Create the combined revenue data dictionary dynamically
+combined_revenue_data = {}
+if include_subscriptions:
+    combined_revenue_data["Subs"] = annual_subscription_revenue
+if include_display_ads:
+    combined_revenue_data["Display"] = annual_display_ad_revenue
+if include_native_content:
+    combined_revenue_data["Native"] = annual_native_revenue
+if include_video_content:
+    combined_revenue_data["Video"] = annual_video_ad_revenue
+
+# Visualization: Pie Chart with Money Totals
+st.header("Revenue Split")
+fig, ax = plt.subplots()
+
+# Plot pie chart with money totals
+ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(),
+       autopct=lambda p: f'€{p * sum(combined_revenue_data.values()) / 100:,.0f}' if p > 0 else '', startangle=140)
+ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+st.pyplot(fig)
