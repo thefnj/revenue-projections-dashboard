@@ -110,7 +110,7 @@ with col_left:
 
     # Highlighted total at the bottom
     st.markdown(
-        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 2px;'>Total Monthly Revenue: €{round(annual_total_revenue / 12):,}</h4>",
+        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 5px;'>Total Monthly Revenue: €{round(annual_total_revenue / 12):,}</h4>",
         unsafe_allow_html=True
     )
 
