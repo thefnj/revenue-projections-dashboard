@@ -36,7 +36,6 @@ overall_rcpm_video = st.number_input("Overall rCPM for Video Ads (€)", min_val
 
 # Slider for adjusting video impressions percentage
 video_impression_change = st.slider("Video Impressions Change (%)", min_value=-50, max_value=100, value=0, step=1)
-adjusted_video_impressions = INITIAL_VIDEO_IMPRESSIONS * (1 + video_impression_change / 100)
 
 # Checkbox for other annual revenue
 include_other_revenue = st.checkbox("Include Other Annual Revenue", value=False)
@@ -59,7 +58,10 @@ with col5:
 adjustment_factor = (subscribers / INITIAL_SUBSCRIBERS) * (1 + engagement_increase / 100)
 adjusted_page_views = INITIAL_PAGE_VIEWS * adjustment_factor
 adjusted_display_impressions = INITIAL_DISPLAY_IMPRESSIONS * adjustment_factor
-adjusted_video_impressions = INITIAL_VIDEO_IMPRESSIONS * adjustment_factor  # Dynamically adjust video impressions
+
+# Dynamically adjust video impressions with slider
+base_video_impressions = INITIAL_VIDEO_IMPRESSIONS * adjustment_factor
+adjusted_video_impressions = base_video_impressions * (1 + video_impression_change / 100)
 
 # Calculations
 def calculate_annual_revenue(subscribers, arpu, include_subs, native_count, avg_native_cost, include_native, display_impressions, rcpm_display, include_display, video_impressions, rcpm_video, include_video, other_revenue):
