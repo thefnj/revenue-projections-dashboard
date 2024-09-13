@@ -108,11 +108,10 @@ with col_left:
     if include_other_revenue_option:
         st.metric("Other Revenue", f"€{round(other_annual_revenue / 12):,}")
 
-    # Highlighted total at the bottom
     st.markdown(
-        f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px;'>"
-        f"<span style='font-size:12px;'>Total Monthly Revenue:</span> "
-        f"<span style='font-size:32px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
+        f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px; text-align: center;'>"
+        f"<span style='font-size:12px; display:block;'>Total Monthly Revenue</span>"
+        f"<span style='font-size:24px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
         f"</div>",
         unsafe_allow_html=True
     )
