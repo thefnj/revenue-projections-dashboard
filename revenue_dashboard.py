@@ -2,97 +2,79 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Define your initial values (yearly totals)
-initial_subscribers = 20000  # Initial baseline value for subscribers
-arpu = 4.60  # Average Revenue Per User in euros
-initial_page_views = 18000000  # Baseline total page views per year
-initial_display_impressions = 84000000  # Baseline total display ad impressions per year
-rcpm_display = 3.10  # Overall rCPM for display ads in euros
-natives_per_month = 2  # Starting number of native articles per month
-avg_cost_per_native = 4000.0  # Starting average revenue per native article in euros
-initial_video_plays = 1800000  # Baseline total video plays per year
-rcpm_video = 3.10  # Overall rCPM for video ads in euros
+Initial Values
 
-# Page configuration
-st.set_page_config(page_title="Enhanced Revenue Projections Dashboard", layout="centered")
+initial\_values = {
+"subscribers": 20000,
+"arpu": 4.60,
+"page\_views": 18000000,
+"display\_impressions": 84000000,
+"rcpm\_display": 3.10,
+"natives\_per\_month": 2,
+"avg\_cost\_per\_native": 4000.0,
+"video\_plays": 1800000,
+"rcpm\_video": 3.10
+}
 
-# Title
+Page Configuration
+
+st.set\_page\_config(page\_title="Enhanced Revenue Projections Dashboard", layout="centered")
+
+Title
+
 st.title("TOL Revenue Projections")
 
-# Subscribers and Engagement Section
-engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=initial_subscribers, step=500)
-avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=arpu, step=0.1)
+User Inputs
 
-# Display Revenue Section
-overall_rcpm_display = st.number_input("Overall rCPM for Display Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_display, step=0.1)
+def get\_user\_inputs(initial\_values):
+engagement\_increase = st.slider("Engagement Rate Increase (%)", min\_value=-50, max\_value=50, value=0, step=1)
+subscribers = st.slider("Subscribers", min\_value=1000, max\_value=50000, value=initial\_values\["subscribers"], step=500)
+avg\_sub\_paid = st.number\_input("Monthly ARPU (€)", min\_value=1.0, max\_value=30.0, value=initial\_values\["arpu"], step=0.1)
+overall\_rcpm\_display = st.number\_input("Overall rCPM for Display Ads (€)", min\_value=0.5, max\_value=20.0, value=initial\_values\["rcpm\_display"], step=0.1)
+natives\_per\_month = st.number\_input("Number of Native Articles Per Month", min\_value=0, value=initial\_values\["natives\_per\_month"], step=1)
+avg\_cost\_per\_native = st.number\_input("Average Revenue Per Native Article (€)", min\_value=0.0, value=initial\_values\["avg\_cost\_per\_native"], step=100.0)
+overall\_rcpm\_video = st.number\_input("Overall rCPM for Video Ads (€)", min\_value=0.5, max\_value=20.0, value=initial\_values\["rcpm\_video"], step=0.1)
 
-# Native Content Revenue Section
-natives_per_month = st.number_input("Number of Native Articles Per Month", min_value=0, value=natives_per_month, step=1)
-avg_cost_per_native = st.number_input("Average Revenue Per Native Article (€)", min_value=0.0, value=avg_cost_per_native, step=100.0)
+Checkboxes for Revenue Streams
 
-# Video Ad Revenue Section
-overall_rcpm_video = st.number_input("Overall rCPM for Video Ads (€)", min_value=0.5, max_value=20.0, value=rcpm_video, step=0.1)
-
-# Display checkboxes in a row
+def get\_revenue\_streams():
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    include_subscriptions = st.checkbox("Subs", value=True)
+include\_subscriptions = st.checkbox("Subs", value=True)
 with col2:
-    include_display_ads = st.checkbox("Display", value=True)
+include\_display\_ads = st.checkbox("Display", value=True)
 with col3:
-    include_native_content = st.checkbox("Native", value=True)
+include\_native\_content = st.checkbox("Native", value=True)
 with col4:
-    include_video_content = st.checkbox("Video", value=False)
+include\_video\_content = st.checkbox("Video", value=False)
 
-# Adjust page views, display impressions, and video plays based on subscribers and engagement rate
-adjusted_page_views = initial_page_views * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
-adjusted_display_impressions = initial_display_impressions * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
-adjusted_video_plays = initial_video_plays * (subscribers / initial_subscribers) * (1 + engagement_increase / 100)
+Revenue Calculations
 
-# Calculations
-monthly_subscription_revenue = subscribers * avg_sub_paid
-annual_subscription_revenue = monthly_subscription_revenue * 12 if include_subscriptions else 0
+def calculate\_revenue(initial\_values, engagement\_increase, subscribers, avg\_sub\_paid, overall\_rcpm\_display, natives\_per\_month, avg\_cost\_per\_native, overall\_rcpm\_video, include\_subscriptions, include\_display\_ads, include\_native\_content, include\_video\_content):
+\# Adjust page views, display impressions, and video plays based on subscribers and engagement rate
+adjusted\_page\_views = initial\_values\["page\_views"] \* (subscribers / initial\_values\["subscribers"]) \* (1 + engagement\_increase / 100)
+adjusted\_display\_impressions = initial\_values\["display\_impressions"] \* (subscribers / initial\_values\["subscribers"]) \* (1 + engagement\_increase / 100)
+adjusted\_video\_plays = initial\_values\["video\_plays"] \* (subscribers / initial\_values\["subscribers"]) \* (1 + engagement\_increase / 100)
 
-# Native Content Revenue Calculations
-monthly_native_revenue = natives_per_month * avg_cost_per_native
-annual_native_revenue = monthly_native_revenue * 12 if include_native_content else 0
+Display Results
 
-# Display Ad Revenue Calculations using overall rCPM
-annual_display_ad_revenue = (adjusted_display_impressions / 1000) * overall_rcpm_display if include_display_ads else 0
-
-# Video Ad Revenue Calculations using overall rCPM
-annual_video_ad_revenue = (adjusted_video_plays / 1000) * overall_rcpm_video if include_video_content else 0
-
-# Total Revenue Calculations
-annual_total_revenue = (
-    annual_subscription_revenue + annual_display_ad_revenue + annual_native_revenue + annual_video_ad_revenue
-)
-
-# Displaying the Results
+def display\_results(annual\_total\_revenue, adjusted\_display\_impressions, adjusted\_page\_views, adjusted\_video\_plays):
 st.header("Revenue Breakdown")
-st.metric("Annual Digital Revenue", f"€{annual_total_revenue:,.2f}")
-st.metric("Annual Display Impressions", f"{adjusted_display_impressions:,.0f}")
-st.metric("Annual Page Views", f"{adjusted_page_views:,.0f}")
-st.metric("Annual Video Plays", f"{adjusted_video_plays:,.0f}")
+st.metric("Annual Digital Revenue", f"€{annual\_total\_revenue:,.2f}")
+st.metric("Annual Display Impressions", f"{adjusted\_display\_impressions:,.0f}")
+st.metric("Annual Page Views", f"{adjusted\_page\_views:,.0f}")
+st.metric("Annual Video Plays", f"{adjusted\_video\_plays:,.0f}")
 
-# Create the combined revenue data dictionary dynamically
-combined_revenue_data = {}
-if include_subscriptions:
-    combined_revenue_data["Subs"] = annual_subscription_revenue
-if include_display_ads:
-    combined_revenue_data["Display"] = annual_display_ad_revenue
-if include_native_content:
-    combined_revenue_data["Native"] = annual_native_revenue
-if include_video_content:
-    combined_revenue_data["Video"] = annual_video_ad_revenue
+Visualisation: Pie Chart with Money Totals
 
-# Visualization: Pie Chart with Money Totals
+def display\_pie\_chart(annual\_subscription\_revenue, annual\_display\_ad\_revenue, annual\_native\_revenue, annual\_video\_ad\_revenue, include\_subscriptions, include\_display\_ads, include\_native\_content, include\_video\_content):
 st.header("Revenue Split")
-fig, ax = plt.subplots()
 
-# Plot pie chart with money totals
-ax.pie(combined_revenue_data.values(), labels=combined_revenue_data.keys(),
-       autopct=lambda p: f'€{p * sum(combined_revenue_data.values()) / 100:,.0f}' if p > 0 else '', startangle=140)
-ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
-st.pyplot(fig)
+Main function
+
+def main():
+engagement\_increase, subscribers, avg\_sub\_paid, overall\_rcpm\_display, natives\_per\_month, avg\_cost\_per\_native, overall\_rcpm\_video = get\_user\_inputs(initial\_values)
+include\_subscriptions, include\_display\_ads, include\_native\_content, include\_video\_content = get\_revenue\_streams()
+
+if name == "main":
+main()
