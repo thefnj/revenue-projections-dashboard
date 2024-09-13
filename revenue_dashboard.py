@@ -112,7 +112,7 @@ with col_left:
     st.markdown(
         f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px;'>"
         f"<span style='font-size:12px;'>Total Monthly Revenue:</span> "
-        f"<span style='font-size:24px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
+        f"<span style='font-size:32px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
         f"</div>",
         unsafe_allow_html=True
     )
