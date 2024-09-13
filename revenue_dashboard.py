@@ -110,7 +110,10 @@ with col_left:
 
     # Highlighted total at the bottom
     st.markdown(
-        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 5px;'>Total Monthly Revenue: €{round(annual_total_revenue / 12):,}</h4>",
+        f"<div style='background-color:#add8e6; padding: 10px; border-radius: 5px;'>"
+        f"<span style='font-size:12px;'>Total Monthly Revenue:</span> "
+        f"<span style='font-size:24px; font-weight:bold;'>€{round(annual_total_revenue / 12):,}</span>"
+        f"</div>",
         unsafe_allow_html=True
     )
 
@@ -130,7 +133,7 @@ with col_right:
 
     # Highlighted total at the bottom
     st.markdown(
-        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 2px;'>Total Annual Revenue: €{round(annual_total_revenue):,}</h4>",
+        f"<h4 style='background-color:#FFD700; padding: 10px; border-radius: 5px;'>Total Annual Revenue: €{round(annual_total_revenue):,}</h4>",
         unsafe_allow_html=True
     )
 
