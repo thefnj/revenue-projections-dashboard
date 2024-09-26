@@ -174,11 +174,11 @@ if combined_revenue_data:  # Only plot if there's data to show
 #     'Page Views': adjusted_page_views / INITIAL_PAGE_VIEWS - 1
 # }
 
-fig, ax = plt.subplots()
-# Filter out None values
-filtered_changes = {k: v for k, v in changes.items() if v is not None}
-ax.plot(list(filtered_changes.keys()), [v * 100 for v in filtered_changes.values()], marker='o', linestyle='-')
-ax.axhline(0, color='gray', linewidth=0.8)
-ax.set_ylabel("Percentage Change (%)")
-ax.set_title("Percentage Change from Initial Values")
-st.pyplot(fig)
+# fig, ax = plt.subplots()
+# # Filter out None values
+# filtered_changes = {k: v for k, v in changes.items() if v is not None}
+# ax.plot(list(filtered_changes.keys()), [v * 100 for v in filtered_changes.values()], marker='o', linestyle='-')
+# ax.axhline(0, color='gray', linewidth=0.8)
+# ax.set_ylabel("Percentage Change (%)")
+# ax.set_title("Percentage Change from Initial Values")
+# st.pyplot(fig)
