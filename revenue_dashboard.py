@@ -21,7 +21,7 @@ st.title("TOL Revenue Projections")
 
 # Subscribers and Engagement Section
 engagement_increase = st.slider("Engagement Rate Increase (%)", min_value=-50, max_value=50, value=0, step=1)
-subscribers = st.slider("Subscribers", min_value=1000, max_value=50000, value=INITIAL_SUBSCRIBERS, step=500)
+subscribers = st.slider("Subscribers", min_value=1000, max_value=100000, value=INITIAL_SUBSCRIBERS, step=500)
 avg_sub_paid = st.number_input("Monthly ARPU (€)", min_value=1.0, max_value=30.0, value=INITIAL_ARPU, step=0.1)
 
 # Display Revenue Section
