@@ -44,7 +44,7 @@ other_annual_revenue = st.number_input("Other Annual Revenue (€)", min_value=0
 # Display checkboxes in a row
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
-    include_subscriptions = st.checkbox("Subs", value=True)
+    include_subscriptions = st.checkbox("Subs", value=False)
 with col2:
     include_display_ads = st.checkbox("Display", value=True)
 with col3:
@@ -165,14 +165,14 @@ if combined_revenue_data:  # Only plot if there's data to show
     ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
     st.pyplot(fig)
 
-# Improved Visualization: Line Chart for Changes Relative to Starting Figures
-st.header("Changes Relative to Starting Values")
-changes = {
-    'Subscribers': subscribers / INITIAL_SUBSCRIBERS - 1 if include_subscriptions else None,
-    'Display Impressions': adjusted_display_impressions / INITIAL_DISPLAY_IMPRESSIONS - 1 if include_display_ads else None,
-    'Video Impressions': adjusted_video_impressions / INITIAL_VIDEO_IMPRESSIONS - 1 if include_video_content else None,
-    'Page Views': adjusted_page_views / INITIAL_PAGE_VIEWS - 1
-}
+# # Improved Visualization: Line Chart for Changes Relative to Starting Figures
+# st.header("Changes Relative to Starting Values")
+# changes = {
+#     'Subscribers': subscribers / INITIAL_SUBSCRIBERS - 1 if include_subscriptions else None,
+#     'Display Impressions': adjusted_display_impressions / INITIAL_DISPLAY_IMPRESSIONS - 1 if include_display_ads else None,
+#     'Video Impressions': adjusted_video_impressions / INITIAL_VIDEO_IMPRESSIONS - 1 if include_video_content else None,
+#     'Page Views': adjusted_page_views / INITIAL_PAGE_VIEWS - 1
+# }
 
 fig, ax = plt.subplots()
 # Filter out None values
